@@ -14,8 +14,8 @@ public class PlayerAttacks : MonoBehaviour
         foreach(Attack attack in _attacks)
             attack.ManualUpdate();
 
-        //TODO: Cancel functionality
-        if (activeAttackIDX != -1) return;
+        //TODO: Cancel functionality, currently hold to keep casting
+        //if (activeAttackIDX != -1) return;
 
         if (Input.GetKey(PlayerControls._instance.p1Simple))
         {
@@ -24,6 +24,10 @@ public class PlayerAttacks : MonoBehaviour
                 activeAttackIDX = 0;
                 return;
             }
+        }
+        else if (activeAttackIDX == 0)
+        {
+            _attacks[0].Cancel();
         }
         // TODO: Other attacks
     }
@@ -39,6 +43,7 @@ public class PlayerAttacks : MonoBehaviour
 
     private bool CheckAndExecute(int idx)
     {
+        if (activeAttackIDX != -1) return false; //TODO: Remove temp code
         return _attacks[idx].AttemptInitiate();
     }
 }

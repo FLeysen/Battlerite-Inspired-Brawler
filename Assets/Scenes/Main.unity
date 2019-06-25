@@ -399,6 +399,8 @@ MonoBehaviour:
   _smoothTime: 0.25
   _target: {fileID: 1624265623}
   _cameraDistance: {x: 0, y: 10, z: -5}
+  _maxUnlockedDistance: {x: 3, y: 3}
+  _maxMouseDistance: {x: 0.8, y: 0.8}
 --- !u!1 &594563138
 GameObject:
   m_ObjectHideFlags: 0
