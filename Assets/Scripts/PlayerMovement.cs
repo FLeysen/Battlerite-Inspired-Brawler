@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -11,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private float _runVelocity = 0f;
     private Vector3 _velocity = Vector3.zero;
     private CharacterController _controller = null;
+    public float moveSlow { get; set; } = 0.0f;
 
     private void Start()
     {
@@ -46,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
             _velocity.x = 0f;
             _velocity.z = 0f;
         }
+        if (moveSlow != 0.0f) _velocity /= moveSlow;
 
         /*
         if ((_controller.collisionFlags & CollisionFlags.Below) != 0)
@@ -55,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
         else
             _velocity.y = 0f;
         */
-
         _controller.Move(_velocity * Time.deltaTime);
     }
 };
