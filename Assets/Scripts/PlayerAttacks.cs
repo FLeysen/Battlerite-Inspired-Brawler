@@ -7,7 +7,7 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] private int _attackCount = 3;
     [Tooltip("Attacks will be bound in order of: simple, ability1, ability2")]
     [SerializeField] private Attack[] _attacks = new Attack[0];
-    public int activeAttackIDX { get; set; } = -1;
+    public int activeAttackID { get; set; } = -1;
 
     private void Update()
     {
@@ -17,15 +17,15 @@ public class PlayerAttacks : MonoBehaviour
         //TODO: Cancel functionality, currently hold to keep casting
         //if (activeAttackIDX != -1) return;
 
-        if (Input.GetKey(PlayerControls._instance.p1Simple))
+        if (Input.GetKey(PlayerControls._instance.ability0))
         {
             if (CheckAndExecute(0))
             {
-                activeAttackIDX = 0;
+                activeAttackID = 0;
                 return;
             }
         }
-        else if (activeAttackIDX == 0)
+        else if (activeAttackID == 0)
         {
             _attacks[0].Cancel();
         }
@@ -39,11 +39,12 @@ public class PlayerAttacks : MonoBehaviour
             Debug.LogWarning("Attack count and size of attack array should match");
             System.Array.Resize(ref _attacks, _attackCount);
         }
+
     }
 
     private bool CheckAndExecute(int idx)
     {
-        if (activeAttackIDX != -1) return false; //TODO: Remove temp code
+        if (activeAttackID != -1) return false; //TODO: Remove temp code
         return _attacks[idx].AttemptInitiate();
     }
 }

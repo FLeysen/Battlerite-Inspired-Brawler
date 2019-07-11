@@ -21,50 +21,57 @@ public abstract class Attack : MonoBehaviour
             UpdateNotCasting();
         else
             UpdateCasting();
+
     }
 
     private void Start()
     {
         _movement = GetComponentInParent<PlayerMovement>();
         _attacks = GetComponentInParent<PlayerAttacks>();
+
     }
 
     public bool AttemptInitiate()
     {
         if (_charges == 0) return false; //TODO: Cooldown animation? Or should be handled elsewhere?
         _isCasting = true;
-        _movement.moveSlow += _movementSlowAmount;
+        _movement.slowFactor += _movementSlowAmount;
         _castTimer = 0.0f;
         --_charges;
         if (_cooldownTimer < 0.0f) _cooldownTimer = _cooldown;
         return true;
+
     }
 
     private void UpdateCasting()
     {
         _castTimer += Time.deltaTime;
+
         Color playerCol = _playerMat.GetColor("_Color");
         playerCol.g = _castTimer / _castTime;
         playerCol.r = 0.0f;
         playerCol.b = playerCol.r;
         _playerMat.SetColor("_Color", playerCol);
+
         if (_castTimer > _castTime)
             OnCastFinish();
     }
 
-    protected abstract void OnCastFinish();
+    abstract protected void OnCastFinish();
 
     public void Cancel()
     {
-        _movement.moveSlow -= _movementSlowAmount;
-        _attacks.activeAttackIDX = -1;
+        _movement.slowFactor -= _movementSlowAmount;
+        _attacks.activeAttackID = -1;
         _isCasting = false;
         _playerMat.SetColor("_Color", Color.white);
+
     }
 
     protected void UpdateNotCasting()
     {
         _cooldownTimer -= Time.deltaTime;
+
         if (_charges < _maxCharges && _cooldownTimer < 0.0f)
         {
             ++_charges;

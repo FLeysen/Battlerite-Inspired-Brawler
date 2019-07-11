@@ -15,13 +15,13 @@ public class Projectile : MonoBehaviour
         transform.SetParent(null, true);
         transform.forward = _source.forward;
         _startPos = transform.position;
+
     }
 
     private void Update()
     {
         transform.position += _velocity * transform.forward * Time.deltaTime;
-        //transform.Translate(_velocity * transform.forward * Time.deltaTime); 
-        //^ This does not do the same and only moves in positive direction????
+
         if ((transform.position - _startPos).sqrMagnitude > _range * _range)
         {
             Destroy(gameObject);
@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                //TODO: Do something
+                //TODO: Fill
             }
         }
         Destroy(gameObject);

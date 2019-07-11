@@ -10,5 +10,6 @@ public class TestProjectileToss : Attack
     {
         Cancel();
         Instantiate(_projectile, transform.parent);
+
     }
 }

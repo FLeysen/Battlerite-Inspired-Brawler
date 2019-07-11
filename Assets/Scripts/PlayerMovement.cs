@@ -9,21 +9,22 @@ public class PlayerMovement : MonoBehaviour
     private float _runVelocity = 0f;
     private Vector3 _velocity = Vector3.zero;
     private CharacterController _controller = null;
-    public float moveSlow { get; set; } = 0.0f;
+    public float slowFactor { get; set; } = 0.0f;
 
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
+
     }
 
     void Update()
     {
         Vector2 movement = Vector2.zero;
-        movement.y += Input.GetKey(PlayerControls._instance.p1MoveF) ? 1f : 0f;
-        movement.y -= Input.GetKey(PlayerControls._instance.p1MoveB) ? 1f : 0f;
+        movement.y += Input.GetKey(PlayerControls._instance.moveF) ? 1f : 0f;
+        movement.y -= Input.GetKey(PlayerControls._instance.moveB) ? 1f : 0f;
                                   
-        movement.x += Input.GetKey(PlayerControls._instance.p1MoveR) ? 1f : 0f;
-        movement.x -= Input.GetKey(PlayerControls._instance.p1MoveL) ? 1f : 0f;
+        movement.x += Input.GetKey(PlayerControls._instance.moveR) ? 1f : 0f;
+        movement.x -= Input.GetKey(PlayerControls._instance.moveL) ? 1f : 0f;
 
         Vector3 forward = Camera.main.transform.forward;
         forward.y = 0f;
@@ -45,7 +46,8 @@ public class PlayerMovement : MonoBehaviour
             _velocity.x = 0f;
             _velocity.z = 0f;
         }
-        if (moveSlow != 0.0f) _velocity /= moveSlow;
+
+        if (slowFactor != 0.0f) _velocity /= slowFactor;
 
         /*
         if ((_controller.collisionFlags & CollisionFlags.Below) != 0)
@@ -55,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         else
             _velocity.y = 0f;
         */
+
         _controller.Move(_velocity * Time.deltaTime);
     }
 };

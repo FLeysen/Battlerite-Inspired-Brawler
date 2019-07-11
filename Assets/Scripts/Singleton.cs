@@ -19,7 +19,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                     GameObject singletonObject = new GameObject();
                     _Instance = singletonObject.AddComponent<T>();
                     singletonObject.name = typeof(T).ToString() + " (Singleton)";
-
                     DontDestroyOnLoad(singletonObject);
                 }
             }
@@ -28,7 +27,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
     private void Start()
     {
-        if (_Instance != null && _Instance != this)
-            Destroy(this);
+        if (_Instance != null && _Instance != this) Destroy(this);
     }
 }
