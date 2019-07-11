@@ -12,6 +12,7 @@ public class PlayerRotate : MonoBehaviour
     private void Start()
     {
         _rotateFactor = 1 / _rotateTime;
+
     }
 
     private void Update()
@@ -19,11 +20,13 @@ public class PlayerRotate : MonoBehaviour
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(mouseRay, out RaycastHit hitInfo, 10000.0f, LayerMask.GetMask("Floor"));
         Quaternion targetRotation = Quaternion.LookRotation(hitInfo.point - transform.position);
+
         if (targetRotation != _previousTarget)
         {
             _previousTarget = targetRotation;
             _elapsedTime = 0.0f;
         }
+
         _elapsedTime += Time.deltaTime;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _elapsedTime * _rotateFactor);
         transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
