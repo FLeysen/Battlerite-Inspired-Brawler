@@ -39,7 +39,6 @@ public class PlayerAttacks : MonoBehaviour
             Debug.LogWarning("Attack count and size of attack array should match");
             System.Array.Resize(ref _attacks, _attackCount);
         }
-
     }
 
     private bool CheckAndExecute(int idx)

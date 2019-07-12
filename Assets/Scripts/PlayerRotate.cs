@@ -12,7 +12,6 @@ public class PlayerRotate : MonoBehaviour
     private void Start()
     {
         _rotateFactor = 1 / _rotateTime;
-
     }
 
     private void Update()

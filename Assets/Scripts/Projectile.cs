@@ -15,7 +15,6 @@ public class Projectile : MonoBehaviour
         transform.SetParent(null, true);
         transform.forward = _source.forward;
         _startPos = transform.position;
-
     }
 
     private void Update()

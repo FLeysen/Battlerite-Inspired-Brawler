@@ -15,7 +15,6 @@ public class PlayerControls : Singleton<PlayerControls>
     private void Awake()
     {
         //TODO: add playerprefs parsing to this
-
         //moveF = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("moveF", KeyCode.W.ToString()));
     }
 }

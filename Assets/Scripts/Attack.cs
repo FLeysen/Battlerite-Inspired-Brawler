@@ -5,8 +5,7 @@ public abstract class Attack : MonoBehaviour
     [SerializeField] private Material _playerMat = null;
     [SerializeField] private float _cooldown = 0.35f;
     [SerializeField] protected float _castTime = 0.1f;
-    [Tooltip("Base movement is 1.0f, slow amount divides that by [value] amount (additive to other slows)")]
-    [SerializeField] private float _movementSlowAmount = 2.0f; 
+    [SerializeField] private float _movementSlowPercent = 0.5f; 
     [SerializeField] private int _maxCharges = 1;
     private PlayerMovement _movement = null;
     private PlayerAttacks _attacks = null;
@@ -21,26 +20,23 @@ public abstract class Attack : MonoBehaviour
             UpdateNotCasting();
         else
             UpdateCasting();
-
     }
 
     private void Start()
     {
         _movement = GetComponentInParent<PlayerMovement>();
         _attacks = GetComponentInParent<PlayerAttacks>();
-
     }
 
     public bool AttemptInitiate()
     {
         if (_charges == 0) return false; //TODO: Cooldown animation? Or should be handled elsewhere?
         _isCasting = true;
-        _movement.slowFactor += _movementSlowAmount;
+        _movement.AddMovementModifier(_movementSlowPercent, _castTime, "Casting"); 
         _castTimer = 0.0f;
         --_charges;
         if (_cooldownTimer < 0.0f) _cooldownTimer = _cooldown;
         return true;
-
     }
 
     private void UpdateCasting()
@@ -57,15 +53,14 @@ public abstract class Attack : MonoBehaviour
             OnCastFinish();
     }
 
-    abstract protected void OnCastFinish();
+    protected abstract void OnCastFinish();
 
     public void Cancel()
     {
-        _movement.slowFactor -= _movementSlowAmount;
+        _movement.RemoveMovementModifier("Casting");
         _attacks.activeAttackID = -1;
         _isCasting = false;
         _playerMat.SetColor("_Color", Color.white);
-
     }
 
     protected void UpdateNotCasting()

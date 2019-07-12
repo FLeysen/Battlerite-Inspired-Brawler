@@ -10,13 +10,13 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Vector2 _maxUnlockedDistance = Vector2.zero;
     [SerializeField] private Vector2 _maxMouseDistance = Vector2.zero;
     private Vector3 _velocity = Vector3.zero;
-    public bool isUntethered { get; set; } = true;
+    public bool isUnlocked { get; set; } = true;
 
     void Update()
     {
         Vector3 targetPos = _target.position + _cameraDistance;
 
-        if (isUntethered)
+        if (isUnlocked)
         {
             Vector3 mousePos = Input.mousePosition;
             Vector2 addedDistance = Vector2.zero;
