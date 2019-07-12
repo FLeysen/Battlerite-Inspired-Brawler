@@ -722,10 +722,13 @@ MonoBehaviour:
   _playerMat: {fileID: 2100000, guid: f9abf4ce34b87af4ba9897cd02bd3b41, type: 2}
   _cooldown: 0.5
   _castTime: 0.5
-  _movementSlowAmount: 2
+  _movementSlowPercent: 0.5
   _maxCharges: 2
   _projectile: {fileID: 93725987735010664, guid: d0da21a9d49226147b22351d06ef274e,
     type: 3}
+  _movement: {fileID: 1624265618}
+  _backDisplaceDistance: 5
+  _backDisplaceDuration: 0.2
 --- !u!1 &1296915339
 GameObject:
   m_ObjectHideFlags: 0

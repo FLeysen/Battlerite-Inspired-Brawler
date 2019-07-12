@@ -7,10 +7,49 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] private float _gravity = 9.81f;
     [SerializeField] private float _runAccel = 10.0f;
     [SerializeField] private float _maxRunVelocity = 5.0f;
-    private float _runVelocity = 0f;
-    private Vector3 _velocity = Vector3.zero;
-    private CharacterController _controller = null;
+    private List<TripleWithKey<string, Vector3, float, float>> _displacements = new List<TripleWithKey<string, Vector3, float, float>>();
     private List<PairWithKey<string, float, float>> _velocityModifiers = new List<PairWithKey<string, float, float>>();
+    private CharacterController _controller = null;
+    private Vector3 _velocity = Vector3.zero;
+    private Vector3 _displacement = Vector3.zero;
+    private float _runVelocity = 0f;
+
+    public void AddDisplacement(Vector3 displacement, float timeToReach, string origin = "")
+    {
+        _displacements.Add(new TripleWithKey<string, Vector3, float, float>(origin, displacement, timeToReach, 0f));
+    }
+
+    public void RemoveDisplacement(string origin, bool removeAll = false)
+    {
+        for (int i = 0; i < _displacements.Count;)
+        {
+            if (_displacements[i].key != origin)
+                ++i;
+            else
+            {
+                _displacements.RemoveAt(i);
+                if (removeAll) continue;
+                return;
+            }
+        }
+    }
+
+    private void UpdateDisplacement()
+    {
+        for (int i = 0; i < _displacements.Count;)
+        {
+            if (_displacements[i].second < _displacements[i].third)
+                _displacements.RemoveAt(i);
+            else
+                _displacements[i++].third += Time.deltaTime;
+        }
+    }
+
+    private void CalculateDisplacement()
+    {
+        foreach (TripleWithKey<string, Vector3, float, float> triple in _displacements)
+            _displacement += triple.first * Time.deltaTime;
+    }
 
     /// <summary>
     /// Adds a modifier to the final velocity calculation.
@@ -27,14 +66,14 @@ public class PlayerMovement : MonoBehaviour
     {
         for (int i = 0; i < _velocityModifiers.Count;)
         {
-            if (_velocityModifiers[i].second < 0f)
+            if (_velocityModifiers[i].key != origin)
+                ++i;
+            else
             {
                 _velocityModifiers.RemoveAt(i);
                 if (removeAll) continue;
                 return;
             }
-            else
-                ++i;
         }
     }
 
@@ -66,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         UpdateModifier();
+        UpdateDisplacement();
 
         Vector2 movement = Vector2.zero;
         movement.y += Input.GetKey(PlayerControls._instance.moveF) ? 1f : 0f;
@@ -106,6 +146,9 @@ public class PlayerMovement : MonoBehaviour
             _velocity.y = 0f;
         */
 
-        _controller.Move(_velocity * Time.deltaTime);
+        CalculateDisplacement();
+        _displacement += _velocity * Time.deltaTime;
+        _controller.Move(_displacement);
+        _displacement = Vector3.zero;
     }
 };
