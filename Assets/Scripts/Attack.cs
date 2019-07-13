@@ -7,7 +7,7 @@ public abstract class Attack : MonoBehaviour
     [SerializeField] protected float _castTime = 0.1f;
     [SerializeField] private float _movementSlowPercent = 0.5f; 
     [SerializeField] private int _maxCharges = 1;
-    private PlayerMovement _movement = null;
+    protected PlayerMovement _movement = null;
     private PlayerAttacks _attacks = null;
     private float _cooldownTimer = 0.0f;
     protected float _castTimer = 0.0f;

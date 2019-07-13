@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void AddDisplacement(Vector3 displacement, float timeToReach, string origin = "")
     {
-        _displacements.Add(new TripleWithKey<string, Vector3, float, float>(origin, displacement, timeToReach, 0f));
+        _displacements.Add(new TripleWithKey<string, Vector3, float, float>(origin, displacement, timeToReach, timeToReach));
     }
 
     public void RemoveDisplacement(string origin, bool removeAll = false)
@@ -38,17 +38,23 @@ public class PlayerMovement : MonoBehaviour
     {
         for (int i = 0; i < _displacements.Count;)
         {
-            if (_displacements[i].second < _displacements[i].third)
+            if (_displacements[i].third == 0f)
                 _displacements.RemoveAt(i);
             else
-                _displacements[i++].third += Time.deltaTime;
+            {
+                _displacements[i].second = _displacements[i].third;
+                _displacements[i].third -= Time.deltaTime;
+                if (_displacements[i].third < 0f)
+                    _displacements[i].third = 0f;
+                ++i;
+            }
         }
     }
 
     private void CalculateDisplacement()
     {
         foreach (TripleWithKey<string, Vector3, float, float> triple in _displacements)
-            _displacement += triple.first * Time.deltaTime;
+            _displacement += triple.first * (triple.second - triple.third);
     }
 
     /// <summary>

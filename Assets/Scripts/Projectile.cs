@@ -38,6 +38,7 @@ public class Projectile : MonoBehaviour
             else
             {
                 //TODO: Fill
+                other.GetComponent<Movable>().AddDisplacement(transform.forward * 4f, 0.1f);
             }
         }
         Destroy(gameObject);

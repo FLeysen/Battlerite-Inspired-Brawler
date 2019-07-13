@@ -5,7 +5,6 @@ using UnityEngine;
 public class TestProjectileToss : Attack
 {
     [SerializeField] private GameObject _projectile = null;
-    [SerializeField] private PlayerMovement _movement = null;
     [SerializeField] private float _backDisplaceDistance = 2f;
     [SerializeField] private float _backDisplaceDuration = 0.1f;
 
