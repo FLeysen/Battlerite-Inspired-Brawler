@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class Movable : MonoBehaviour
+public class Movable : Observer
 {
     private List<TripleWithKey<string, Vector3, float, float>> _displacements = new List<TripleWithKey<string, Vector3, float, float>>();
     private CharacterController _controller = null;
@@ -12,6 +12,15 @@ public class Movable : MonoBehaviour
     public void AddDisplacement(Vector3 displacement, float timeToReach, string origin = "")
     {
         _displacements.Add(new TripleWithKey<string, Vector3, float, float>(origin, displacement, timeToReach, timeToReach));
+    }
+
+    public override void OnNotify<T>(T source, int eventIndex)
+    {
+        if (eventIndex == (int)PlayerEvent.Knockback)
+        {
+            Projectile projectile = source as Projectile;
+            _displacements.Add(new TripleWithKey<string, Vector3, float, float>(projectile.GetName(), projectile.GetDisplacement(), projectile.GetDisplacementDuration(), projectile.GetDisplacementDuration()));
+        }
     }
 
     public void RemoveDisplacement(string origin, bool removeAll = false)
@@ -55,6 +64,7 @@ public class Movable : MonoBehaviour
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
+        GetComponent<PlayerMessenger>().AddObserver(this);
     }
 
     void Update()

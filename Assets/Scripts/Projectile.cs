@@ -27,6 +27,21 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    public Vector3 GetDisplacement()
+    {
+        return transform.forward * 4f;
+    }
+
+    public float GetDisplacementDuration()
+    {
+        return 0.1f;
+    }
+
+    public string GetName()
+    {
+        return "Placeholder";
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -38,7 +53,8 @@ public class Projectile : MonoBehaviour
             else
             {
                 //TODO: Fill
-                other.GetComponent<Movable>().AddDisplacement(transform.forward * 4f, 0.1f);
+                //other.GetComponent<Movable>().AddDisplacement(transform.forward * 4f, 0.1f);
+                other.GetComponent<PlayerMessenger>().Notify(this, (int)PlayerEvent.Knockback);
             }
         }
         Destroy(gameObject);

@@ -355,6 +355,24 @@ MonoBehaviour:
   _cameraDistance: {x: 0, y: 10, z: -5}
   _maxUnlockedDistance: {x: 3, y: 3}
   _maxMouseDistance: {x: 0.8, y: 0.8}
+--- !u!1 &715330231 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4239815981634263271, guid: 9b5d1bf1d89739348b7add988b6b1acf,
+    type: 3}
+  m_PrefabInstance: {fileID: 4239815981562183858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &715330237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715330231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eb07d1a9bada7e4394574c07fb517d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1624265623 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7200877100187754852, guid: 8dd3a2c27eae47040b6117433fffd4fc,
@@ -550,11 +568,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7200877100187754876, guid: 8dd3a2c27eae47040b6117433fffd4fc,
-        type: 3}
-      propertyPath: m_Name
-      value: TestCharacter
-      objectReference: {fileID: 0}
     - target: {fileID: 7200877100187754852, guid: 8dd3a2c27eae47040b6117433fffd4fc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -609,6 +622,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200877100187754876, guid: 8dd3a2c27eae47040b6117433fffd4fc,
+        type: 3}
+      propertyPath: m_Name
+      value: TestCharacter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dd3a2c27eae47040b6117433fffd4fc, type: 3}

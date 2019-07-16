@@ -8,6 +8,17 @@ public class TestProjectileToss : Attack
     [SerializeField] private float _backDisplaceDistance = 2f;
     [SerializeField] private float _backDisplaceDuration = 0.1f;
 
+   //public Vector3 GetBackDisplaceDist()
+   //{
+   //    Vector3 displacement = -_movement.transform.forward;
+   //    displacement.y = 0f;
+   //    return displacement;
+   //}
+   //public float GetBackDisplaceDuration()
+   //{
+   //    return _backDisplaceDuration;
+   //}
+    
     protected override void OnCastFinish()
     {
         Cancel();
