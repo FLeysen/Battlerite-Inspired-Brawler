@@ -9,17 +9,12 @@ public class Movable : Observer
     private CharacterController _controller = null;
     private Vector3 _displacement = Vector3.zero;
 
-    public void AddDisplacement(Vector3 displacement, float timeToReach, string origin = "")
-    {
-        _displacements.Add(new TripleWithKey<string, Vector3, float, float>(origin, displacement, timeToReach, timeToReach));
-    }
-
-    public override void OnNotify<T>(T source, int eventIndex)
+    public override void OnNotify<T, Y>(T source, int eventIndex, params Y[] args)
     {
         if (eventIndex == (int)PlayerEvent.Knockback)
         {
-            Projectile projectile = source as Projectile;
-            _displacements.Add(new TripleWithKey<string, Vector3, float, float>(projectile.GetName(), projectile.GetDisplacement(), projectile.GetDisplacementDuration(), projectile.GetDisplacementDuration()));
+            PairWithKey<string, Vector3, float> knockbackArgs = args[0] as PairWithKey<string, Vector3, float>;
+            _displacements.Add(new TripleWithKey<string, Vector3, float, float>(knockbackArgs.key, knockbackArgs.first, knockbackArgs.second, knockbackArgs.second));
         }
     }
 

@@ -6,8 +6,11 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float _range = 5.0f;
     [SerializeField] private float _velocity = 10.0f;
+    [SerializeField] private float _damage = 18.0f;
     private Vector3 _startPos = Vector3.zero;
     private Transform _source = null;
+    private float _knockbackDuration = 0.3f;
+    private string _name = "Incap";
 
     private void Start()
     {
@@ -27,19 +30,9 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public Vector3 GetDisplacement()
+    private Vector3 GetDisplacement()
     {
         return transform.forward * 4f;
-    }
-
-    public float GetDisplacementDuration()
-    {
-        return 0.1f;
-    }
-
-    public string GetName()
-    {
-        return "Placeholder";
     }
 
     private void OnTriggerEnter(Collider other)
@@ -53,8 +46,9 @@ public class Projectile : MonoBehaviour
             else
             {
                 //TODO: Fill
-                //other.GetComponent<Movable>().AddDisplacement(transform.forward * 4f, 0.1f);
-                other.GetComponent<PlayerMessenger>().Notify(this, (int)PlayerEvent.Knockback);
+                PlayerMessenger messenger = other.GetComponent<PlayerMessenger>();
+                messenger.Notify(this, (int)PlayerEvent.Knockback, new PairWithKey<string, Vector3, float>(_name, GetDisplacement(), _knockbackDuration));
+                messenger.Notify(this, (int)PlayerEvent.HealthChange, -_damage);
             }
         }
         Destroy(gameObject);

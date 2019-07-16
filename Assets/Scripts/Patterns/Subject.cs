@@ -16,11 +16,11 @@ public abstract class Subject : MonoBehaviour
         _observers.Remove(observer);
     }
 
-    public void Notify<T>(T source, int eventIndex)
+    public void Notify<T, Y>(T source, int eventIndex, params Y[] args)
     {
         foreach (Observer observer in _observers)
         {
-            observer.OnNotify(source, eventIndex);
+            observer.OnNotify(source, eventIndex, args);
         }
     }
 }
