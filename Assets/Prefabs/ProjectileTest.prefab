@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 93725987735010667}
   - component: {fileID: 93725987735010666}
   - component: {fileID: 27035146154211411}
+  - component: {fileID: 5608122283916397327}
+  - component: {fileID: 4665735805878893534}
   m_Layer: 0
   m_Name: ProjectileTest
   m_TagString: Untagged
@@ -56,6 +58,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -67,6 +70,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -106,3 +110,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _range: 5
   _velocity: 10
+--- !u!114 &5608122283916397327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93725987735010664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9795f1b4d2837438c40e4a2d1eeedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 18
+  _knockbackDistance: 4
+  _knockbackDuration: 0.1
+  _name: Fireball
+--- !u!114 &4665735805878893534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93725987735010664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174538ed3725fc848a16c60e9e441298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 2
+  _ticks: 10
+  _damage: 2
