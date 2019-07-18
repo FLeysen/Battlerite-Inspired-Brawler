@@ -17,7 +17,7 @@ public class PlayerAttacks : MonoBehaviour
         //TODO: Cancel functionality, currently hold to keep casting
         //if (activeAttackIDX != -1) return;
 
-        if (Input.GetKey(PlayerControls._instance.ability0))
+        if (Input.GetKey(PlayerControls.instance.ability0))
         {
             if (CheckAndExecute(0))
             {

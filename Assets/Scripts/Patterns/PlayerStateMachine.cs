@@ -39,8 +39,6 @@ public class BurningState : State
     }
 }
 
-
-
 public class PlayerStateMachine : Observer
 {
     private State _currentState = null;
@@ -61,6 +59,7 @@ public class PlayerStateMachine : Observer
 
     public override void OnNotify<T, Y>(T source, int eventIndex, params Y[] args)
     {
+        /*
         if (eventIndex == (int)PlayerEvent.SetAblaze)
         {
             _burningState.duration = System.Convert.ToSingle(args[0]);
@@ -68,6 +67,7 @@ public class PlayerStateMachine : Observer
             _burningState.damage = System.Convert.ToSingle(args[2]);
             TransitionTo(_burningState);
         }
+        */
     }
 
     private void TransitionTo(State newState)

@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T _Instance;
+    private static T _instance;
 
-    public static T _instance
+    public static T instance
     {
         get
         {
-            if (_Instance == null)
+            if (_instance == null)
             {
-                _Instance = (T)FindObjectOfType(typeof(T));
+                _instance = (T)FindObjectOfType(typeof(T));
 
-                if (_Instance == null)
+                if (_instance == null)
                 {
                     GameObject singletonObject = new GameObject();
-                    _Instance = singletonObject.AddComponent<T>();
+                    _instance = singletonObject.AddComponent<T>();
                     singletonObject.name = typeof(T).ToString() + " (Singleton)";
                     DontDestroyOnLoad(singletonObject);
                 }
             }
-            return _Instance;
+            return _instance;
         }
     }
     private void Start()
     {
-        if (_Instance != null && _Instance != this) Destroy(this);
+        if (_instance != null && _instance != this) Destroy(this);
     }
 }

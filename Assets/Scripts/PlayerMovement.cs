@@ -114,11 +114,11 @@ public class PlayerMovement : MonoBehaviour
         UpdateDisplacement();
 
         Vector2 movement = Vector2.zero;
-        movement.y += Input.GetKey(PlayerControls._instance.moveF) ? 1f : 0f;
-        movement.y -= Input.GetKey(PlayerControls._instance.moveB) ? 1f : 0f;
+        movement.y += Input.GetKey(PlayerControls.instance.moveF) ? 1f : 0f;
+        movement.y -= Input.GetKey(PlayerControls.instance.moveB) ? 1f : 0f;
                                   
-        movement.x += Input.GetKey(PlayerControls._instance.moveR) ? 1f : 0f;
-        movement.x -= Input.GetKey(PlayerControls._instance.moveL) ? 1f : 0f;
+        movement.x += Input.GetKey(PlayerControls.instance.moveR) ? 1f : 0f;
+        movement.x -= Input.GetKey(PlayerControls.instance.moveL) ? 1f : 0f;
 
         Vector3 forward = Camera.main.transform.forward;
         forward.y = 0f;

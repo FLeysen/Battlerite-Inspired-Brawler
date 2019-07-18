@@ -21,7 +21,7 @@ public class Inflammatory : MonoBehaviour
         if (other.CompareTag("Player") && other.transform != _projectile.GetSource())
         {
              PlayerMessenger messenger = other.GetComponent<PlayerMessenger>();
-             messenger.Notify(this, (int)PlayerEvent.SetAblaze, _duration, _ticks, _damage);
+             messenger.Notify(this, (int)PlayerEvent.EnterStatus, new TripleWithKey<System.Type, float, float, float>(typeof(AblazeStatus), _duration, _ticks, _damage));
         }
     }
 }
