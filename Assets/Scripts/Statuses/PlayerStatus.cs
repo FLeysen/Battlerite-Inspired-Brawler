@@ -2,40 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatus : Observer
+public class PlayerStatus : MonoBehaviour, SetAblazeEventReceiver
 {
+    private PlayerEventMessenger _eventMessenger = null;
+    private AblazeStatus _ablazeStatus = new AblazeStatus();
     private List<Status> _statuses = new List<Status>();
 
     private void Start()
     {
-        PlayerMessenger messenger = GetComponent<PlayerMessenger>();
-        messenger.AddObserver(this);
+        _eventMessenger = GetComponent<PlayerEventMessenger>();
 
-        foreach (System.Type status in PossibleStatuses.instance.playerStatuses)
-        {
-            _statuses.Add((Status)status.GetConstructor(System.Type.EmptyTypes).Invoke(null));
-            _statuses[_statuses.Count - 1].ProvidePlayerMessenger(messenger);
-        }
+        _eventMessenger.AddSetAblazeReceiver(this);
+        _statuses.Add(_ablazeStatus);
     }
 
     private void Update()
     {
         foreach(Status status in _statuses)
         {
-            if (status.IsActive()) status.Update();
-        }
-    }
-
-    public override void OnNotify<T, Y>(T source, int eventIndex, params Y[] args)
-    {
-        if (eventIndex != (int)PlayerEvent.EnterStatus) return;
-
-        TripleWithKey<System.Type, float, float, float> arg = args[0] as TripleWithKey<System.Type, float, float, float>;
-        foreach (Status status in _statuses)
-        {
-            if (status.GetType() != arg.key) continue;
-            status.TryEnter(arg.first, arg.second, arg.third);
-            return;
+            if (!status.IsActive()) continue;
+            status.Update(_eventMessenger);
         }
     }
 
@@ -46,5 +32,10 @@ public class PlayerStatus : Observer
             if (status.GetType() == statusType) return status.IsActive();
         }
         return false;
+    }
+
+    public void ReceiveSetAblazeEvent(GameObject source, string sourceName, float duration, float ticks, float tickDamage)
+    {
+        _ablazeStatus.TryEnter(duration, ticks, tickDamage);
     }
 }

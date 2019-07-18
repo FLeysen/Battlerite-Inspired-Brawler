@@ -3,20 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class Movable : Observer
+public class Movable : MonoBehaviour, KnockbackEventReceiver
 {
     private List<TripleWithKey<string, Vector3, float, float>> _displacements = new List<TripleWithKey<string, Vector3, float, float>>();
     private CharacterController _controller = null;
     private Vector3 _displacement = Vector3.zero;
-
-    public override void OnNotify<T, Y>(T source, int eventIndex, params Y[] args)
-    {
-        if (eventIndex == (int)PlayerEvent.Knockback)
-        {
-            PairWithKey<string, Vector3, float> knockbackArgs = args[0] as PairWithKey<string, Vector3, float>;
-            _displacements.Add(new TripleWithKey<string, Vector3, float, float>(knockbackArgs.key, knockbackArgs.first, knockbackArgs.second, knockbackArgs.second));
-        }
-    }
 
     public void RemoveDisplacement(string origin, bool removeAll = false)
     {
@@ -59,7 +50,7 @@ public class Movable : Observer
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
-        GetComponent<PlayerMessenger>().AddObserver(this);
+        GetComponent<PlayerEventMessenger>().AddKnockbackReceiver(this);
     }
 
     void Update()
@@ -68,5 +59,10 @@ public class Movable : Observer
         CalculateDisplacement();
         _controller.Move(_displacement);
         _displacement = Vector3.zero;
+    }
+
+    public void ReceiveKnockbackEvent(GameObject source, string sourceName, Vector3 distance, float duration)
+    {
+        _displacements.Add(new TripleWithKey<string, Vector3, float, float>(sourceName, distance, duration, duration));
     }
 }

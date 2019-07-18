@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 27035146154211411}
   - component: {fileID: 5608122283916397327}
   - component: {fileID: 4665735805878893534}
+  - component: {fileID: 1878905716223398309}
+  - component: {fileID: 971729785866072016}
   m_Layer: 0
   m_Name: ProjectileTest
   m_TagString: Untagged
@@ -141,3 +143,28 @@ MonoBehaviour:
   _duration: 2
   _ticks: 10
   _damage: 2
+  _name: 
+--- !u!114 &1878905716223398309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93725987735010664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c966bc0a668640a4fa1192547c91579d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &971729785866072016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93725987735010664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d327a53c2f8759141a972ede954667c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
