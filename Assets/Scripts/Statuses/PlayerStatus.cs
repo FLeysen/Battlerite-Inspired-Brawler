@@ -11,7 +11,6 @@ public class PlayerStatus : MonoBehaviour, SetAblazeEventReceiver
     private void Start()
     {
         _eventMessenger = GetComponent<PlayerEventMessenger>();
-
         _eventMessenger.AddSetAblazeReceiver(this);
         _statuses.Add(_ablazeStatus);
     }
@@ -37,5 +36,28 @@ public class PlayerStatus : MonoBehaviour, SetAblazeEventReceiver
     public void ReceiveSetAblazeEvent(GameObject source, string sourceName, float duration, float ticks, float tickDamage)
     {
         _ablazeStatus.TryEnter(duration, ticks, tickDamage);
+    }
+
+    public int ClearStatesOfType(StatusType type)
+    {
+        int amtCleared = 0;
+        foreach (Status status in _statuses)
+        {
+            if ((status.GetStatusType() & type) != StatusType.Undefined)
+            {
+                if (status.TryExit()) ++amtCleared;
+            }
+        }
+        return amtCleared;
+    }
+
+    public int ClearAll()
+    {
+        int amtCleared = 0;
+        foreach (Status status in _statuses)
+        {
+            if (status.TryExit()) ++amtCleared;
+        }
+        return amtCleared;
     }
 }

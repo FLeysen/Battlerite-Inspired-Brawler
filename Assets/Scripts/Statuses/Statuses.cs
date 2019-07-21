@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum StatusType
+{
+    Undefined = 0, //No status should ever be of this type
+    Negative = 1,
+    Beneficial = 2,
+}
+
 public abstract class Status
 {
+    public abstract StatusType GetStatusType();
+
     protected bool _isActive = false;
     public bool IsActive()
     {
@@ -53,5 +62,10 @@ public class AblazeStatus : Status
 
             if (--_ticks == 0) _isActive = false;
         }
+    }
+
+    public override StatusType GetStatusType()
+    {
+        return StatusType.Negative & StatusType.Undefined;
     }
 }

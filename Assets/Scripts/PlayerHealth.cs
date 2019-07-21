@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour, HealthChangeEventReceiver
     private float _health = 230.0f;
     private float _maxEffectiveHealth = 230.0f;
 
-    void Start()
+    private void Start()
     {
         GetComponent<PlayerEventMessenger>().AddHealthChangeReceiver(this);
         _healthBar = GetComponentInChildren<HealthBar>();
@@ -42,5 +42,10 @@ public class PlayerHealth : MonoBehaviour, HealthChangeEventReceiver
     public void ReceiveHealthChangeEvent(GameObject source, string sourceName, float damage, HealthChangeType type)
     {
         ChangeHealth(damage, type);
+    }
+
+    public void RestoreToMax()
+    {
+        ChangeHealth(_maxHealth - _health, HealthChangeType.HealBeyondMax);
     }
 }
