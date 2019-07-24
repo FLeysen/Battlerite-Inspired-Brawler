@@ -12,7 +12,7 @@ public class ScoreTracker : MonoBehaviour, HealthChangeEventReceiver
 
     public void ReceiveHealthChangeEvent(GameObject source, string sourceName, float damage, HealthChangeType type)
     {
-        Player player = source.GetComponent<Player>();
+        Player player = GameInfoManager.instance.GetAttachedPlayer(source);
         int index = GameInfoManager.instance.GetFirstIndexOfTeam(player.team) + player.positionInTeam;
         if ((type & HealthChangeType.Heal) == 0)
             _uiElements[index].AddDamageDealt(-damage);

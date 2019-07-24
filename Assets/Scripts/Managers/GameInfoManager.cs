@@ -42,4 +42,26 @@ public class GameInfoManager : Singleton<GameInfoManager>
         }
         users.Add(user);
     }
+
+    public Player GetAttachedPlayer(GameObject toCheck)
+    {
+        foreach(Player player in players)
+        {
+            if (player.gameObject != toCheck) continue;
+            return player;
+        }
+        return null;
+    }
+
+    /*
+    public User GetAttachedUser(GameObject toCheck)
+    {
+        foreach (User user in users)
+        {
+            if (user.gameObject != toCheck) continue;
+            return user;
+        }
+        return null;
+    }
+    */
 }
