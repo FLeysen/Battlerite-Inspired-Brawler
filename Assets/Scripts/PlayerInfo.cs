@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerInfo : MonoBehaviour
 {
     public string characterName = "UNDEFINED_PLAYER_CHARACTER";
     public int team = 0;
@@ -10,10 +10,10 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        GameInfoManager.instance.AddPlayer(this);
+        PlayerInfoManager.instance.AddPlayer(this);
     }
 
-    public bool IsIndexSmaller(Player other)
+    public bool IsIndexSmaller(PlayerInfo other)
     {
         if (team == other.team)
             return positionInTeam < other.positionInTeam;

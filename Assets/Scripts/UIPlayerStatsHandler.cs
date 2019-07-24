@@ -17,11 +17,12 @@ public class UIPlayerStatsHandler : MonoBehaviour
     private float _healingDone = 0f;
     private float _disableScore = 0f;
 
-    public void ProvideData(Player player, User user)
+    public void ProvideData(PlayerInfo player, User user)
     {
         _character.text = player.characterName;
         _name.text = user.userName;
         _title.text = user.title;
+        _icon.sprite = CharacterIconGrabber.instance.Get(player.characterName);
     }
 
     public void AddDamageDealt(float amount)

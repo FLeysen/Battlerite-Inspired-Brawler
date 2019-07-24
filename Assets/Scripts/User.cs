@@ -10,6 +10,6 @@ public class User : MonoBehaviour
 
     private void Start()
     {
-        GameInfoManager.instance.AddUser(this);
+        PlayerInfoManager.instance.AddUser(this);
     }
 }

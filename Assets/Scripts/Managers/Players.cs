@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Players : Singleton<Players>
 {
-    private List<Player> _players = new List<Player>();
+    private List<PlayerInfo> _players = new List<PlayerInfo>();
 
 }

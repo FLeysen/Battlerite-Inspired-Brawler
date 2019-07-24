@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameInfoManager : Singleton<GameInfoManager>
+public class PlayerInfoManager : Singleton<PlayerInfoManager>
 {
-    public List<Player> players { get; set; } = new List<Player>();
+    public List<PlayerInfo> players { get; set; } = new List<PlayerInfo>();
     public List<User> users { get; set; } = new List<User>();
     public int teamCount { get; set; } = 2;
     public int[] playersPerTeam { get; set; } = new int[2] { 1, 1 };
@@ -17,7 +17,7 @@ public class GameInfoManager : Singleton<GameInfoManager>
         return result;
     }
 
-    public void AddPlayer(Player player)
+    public void AddPlayer(PlayerInfo player)
     {
         for(int i = 0, size = players.Count; i < size; ++i)
         {
@@ -43,9 +43,9 @@ public class GameInfoManager : Singleton<GameInfoManager>
         users.Add(user);
     }
 
-    public Player GetAttachedPlayer(GameObject toCheck)
+    public PlayerInfo GetAttachedPlayer(GameObject toCheck)
     {
-        foreach(Player player in players)
+        foreach(PlayerInfo player in players)
         {
             if (player.gameObject != toCheck) continue;
             return player;

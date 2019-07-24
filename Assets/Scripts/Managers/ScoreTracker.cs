@@ -12,8 +12,8 @@ public class ScoreTracker : MonoBehaviour, HealthChangeEventReceiver
 
     public void ReceiveHealthChangeEvent(GameObject source, string sourceName, float damage, HealthChangeType type)
     {
-        Player player = GameInfoManager.instance.GetAttachedPlayer(source);
-        int index = GameInfoManager.instance.GetFirstIndexOfTeam(player.team) + player.positionInTeam;
+        PlayerInfo player = PlayerInfoManager.instance.GetAttachedPlayer(source);
+        int index = PlayerInfoManager.instance.GetFirstIndexOfTeam(player.team) + player.positionInTeam;
         if ((type & HealthChangeType.Heal) == 0)
             _uiElements[index].AddDamageDealt(-damage);
         else
@@ -22,17 +22,17 @@ public class ScoreTracker : MonoBehaviour, HealthChangeEventReceiver
 
     private void Start()
     {
-        _uiElements = new UIPlayerStatsHandler[GameInfoManager.instance.players.Count];
-        for (int i = 0, size = GameInfoManager.instance.players.Count; i < size; ++i)
+        _uiElements = new UIPlayerStatsHandler[PlayerInfoManager.instance.players.Count];
+        for (int i = 0, size = PlayerInfoManager.instance.players.Count; i < size; ++i)
         {
-            GameInfoManager.instance.players[i].GetComponent<PlayerEventMessenger>().AddHealthChangeReceiver(this);
+            PlayerInfoManager.instance.players[i].GetComponent<PlayerEventMessenger>().AddHealthChangeReceiver(this);
             _uiElements[i] = Instantiate(_uiElementPrefab, transform.parent).GetComponent<UIPlayerStatsHandler>();
-            _uiElements[i].ProvideData(GameInfoManager.instance.players[i], GameInfoManager.instance.users[i]);
-            PositionUIElement(GameInfoManager.instance.players[i], _uiElements[i]);
+            _uiElements[i].ProvideData(PlayerInfoManager.instance.players[i], PlayerInfoManager.instance.users[i]);
+            PositionUIElement(PlayerInfoManager.instance.players[i], _uiElements[i]);
         }
     }
 
-    private void PositionUIElement(Player player, UIPlayerStatsHandler uiElement)
+    private void PositionUIElement(PlayerInfo player, UIPlayerStatsHandler uiElement)
     {
         Vector3 position = Vector2.zero;
         RectTransform rect = uiElement.GetComponent<RectTransform>();
