@@ -18,11 +18,12 @@ public class KnockbackOnHit : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (other.transform == GetComponent<OriginalParentTracker>().GetSource())
+            OriginalParentTracker parentTracker = GetComponent<OriginalParentTracker>();
+            if (other.transform == parentTracker.GetSource())
                 return;
             PlayerEventMessenger messenger = other.GetComponent<PlayerEventMessenger>();
-             messenger.SendKnockbackEvent(gameObject, _name, CalculateDisplacement(), _knockbackDuration);
-             messenger.SendHealthChangeEvent(gameObject, _name, -_damage, HealthChangeType.Generic);
+            messenger.SendKnockbackEvent(parentTracker.GetSource().gameObject, _name, CalculateDisplacement(), _knockbackDuration);
+            messenger.SendHealthChangeEvent(parentTracker.GetSource().gameObject, _name, -_damage, HealthChangeType.Generic);
         }
     }
 }

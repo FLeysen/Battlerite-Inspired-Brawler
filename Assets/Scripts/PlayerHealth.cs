@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum HealthChangeType
 {
-    Generic,
-    DOT,
-    Heal,
-    HealBeyondMax
+    Generic = 0,
+    DOT = 1,
+    Heal = 2,
+    HealBeyondMax = 4,
 }
 
 public class PlayerHealth : MonoBehaviour, HealthChangeEventReceiver

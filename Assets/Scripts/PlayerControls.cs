@@ -8,9 +8,8 @@ public class PlayerControls : Singleton<PlayerControls>
     public KeyCode moveL { get; set; } = KeyCode.A;
     public KeyCode moveB { get; set; } = KeyCode.S;
     public KeyCode moveR { get; set; } = KeyCode.D;
-    public KeyCode ability0 { get; set; } = KeyCode.Mouse0;
-    public KeyCode ability1 { get; set; } = KeyCode.Mouse1;
-    public KeyCode ability2 { get; set; } = KeyCode.E;
+    public KeyCode[] abilities { get; set; } = new KeyCode[6] { KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.Q, KeyCode.E, KeyCode.R, KeyCode.F };
+    public KeyCode cancel { get; set; } = KeyCode.Mouse4;
 
     private void Awake()
     {

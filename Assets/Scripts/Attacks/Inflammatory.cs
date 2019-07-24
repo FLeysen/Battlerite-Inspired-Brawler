@@ -13,10 +13,11 @@ public class Inflammatory : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (other.transform == GetComponent<OriginalParentTracker>().GetSource())
+            OriginalParentTracker parentTracker = GetComponent<OriginalParentTracker>();
+            if (other.transform == parentTracker.GetSource())
                 return;
             PlayerEventMessenger messenger = other.GetComponent<PlayerEventMessenger>();
-             messenger.SendSetAblazeEvent(gameObject, _name, _duration, _ticks, _damage);
+            messenger.SendSetAblazeEvent(parentTracker.GetSource().gameObject, _name, _duration, _ticks, _damage);
         }
     }
 }

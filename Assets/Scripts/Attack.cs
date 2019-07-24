@@ -5,14 +5,17 @@ public abstract class Attack : MonoBehaviour
     [SerializeField] private Material _playerMat = null;
     [SerializeField] private float _cooldown = 0.35f;
     [SerializeField] protected float _castTime = 0.1f;
+    [SerializeField] private float _cancelCooldown = 0.1f;
     [SerializeField] private float _movementSlowPercent = 0.5f; 
     [SerializeField] private int _maxCharges = 1;
     protected PlayerMovement _movement = null;
     private PlayerAttacks _attacks = null;
     private float _cooldownTimer = 0.0f;
+    private float _cancelCooldownTimer = 0.0f;
     protected float _castTimer = 0.0f;
-    private bool _isCasting = false;
     private int _charges = 1;
+    private bool _isCasting = false;
+    private bool _wasCanceled = false;
 
     public void ManualUpdate()
     {
@@ -30,12 +33,10 @@ public abstract class Attack : MonoBehaviour
 
     public bool AttemptInitiate()
     {
-        if (_charges == 0) return false; //TODO: Cooldown animation? Or should be handled elsewhere?
+        if (_charges == 0 || _wasCanceled) return false; //TODO: Cooldown animation? Or should be handled elsewhere?
         _isCasting = true;
         _movement.AddMovementModifier(_movementSlowPercent, _castTime, "Casting"); 
         _castTimer = 0.0f;
-        --_charges;
-        if (_cooldownTimer < 0.0f) _cooldownTimer = _cooldown;
         return true;
     }
 
@@ -50,13 +51,18 @@ public abstract class Attack : MonoBehaviour
         _playerMat.SetColor("_Color", playerCol);
 
         if (_castTimer > _castTime)
+        {
+            --_charges;
+            if (_cooldownTimer < 0.0f) _cooldownTimer = _cooldown;
             OnCastFinish();
+        }
     }
 
     protected abstract void OnCastFinish();
 
-    public void Cancel()
+    public void Cancel(bool activateCancelCooldown = false)
     {
+        _wasCanceled = activateCancelCooldown;
         _movement.RemoveMovementModifier("Casting");
         _attacks.activeAttackID = -1;
         _isCasting = false;
@@ -71,6 +77,16 @@ public abstract class Attack : MonoBehaviour
         {
             ++_charges;
             _cooldownTimer += _cooldown;
+        }
+
+        if (_wasCanceled)
+        {
+            _cancelCooldownTimer += Time.deltaTime;
+            if (_cancelCooldownTimer > _cancelCooldown)
+            {
+                _cancelCooldownTimer = 0f;
+                _wasCanceled = false;
+            }
         }
     }
 }

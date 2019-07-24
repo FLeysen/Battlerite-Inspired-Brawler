@@ -35,7 +35,7 @@ public class PlayerStatus : MonoBehaviour, SetAblazeEventReceiver
 
     public void ReceiveSetAblazeEvent(GameObject source, string sourceName, float duration, float ticks, float tickDamage)
     {
-        _ablazeStatus.TryEnter(duration, ticks, tickDamage);
+        _ablazeStatus.TryEnter(duration, ticks, tickDamage, source);
     }
 
     public int ClearStatesOfType(StatusType type)

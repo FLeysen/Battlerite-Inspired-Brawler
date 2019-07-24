@@ -14,22 +14,25 @@ public class PlayerAttacks : MonoBehaviour
         foreach(Attack attack in _attacks)
             attack.ManualUpdate();
 
-        //TODO: Cancel functionality, currently hold to keep casting
-        //if (activeAttackIDX != -1) return;
-
-        if (Input.GetKey(PlayerControls.instance.ability0))
+        if (activeAttackID != -1)
         {
-            if (CheckAndExecute(0))
-            {
-                activeAttackID = 0;
+            if (!Input.GetKeyDown(PlayerControls.instance.cancel))
                 return;
+            else
+                _attacks[activeAttackID].Cancel(true);
+        }
+        
+        for (int i = 0, length = _attacks.Length; i < length; ++i)
+        {
+            if (Input.GetKey(PlayerControls.instance.abilities[i]))
+            {
+                if (CheckAndExecute(i))
+                {
+                    activeAttackID = i;
+                    break;
+                }
             }
         }
-        else if (activeAttackID == 0)
-        {
-            _attacks[0].Cancel();
-        }
-        // TODO: Other attacks
     }
 
     private void OnValidate()
@@ -43,7 +46,6 @@ public class PlayerAttacks : MonoBehaviour
 
     private bool CheckAndExecute(int idx)
     {
-        if (activeAttackID != -1) return false; //TODO: Remove temp code
         return _attacks[idx].AttemptInitiate();
     }
 }

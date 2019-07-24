@@ -31,13 +31,14 @@ public abstract class Status
 
 public class AblazeStatus : Status
 {
+    private GameObject _source = null;
     private float _duration = 0f;
     private float _damage = 0f;
     private float _ticks = 0f;
     private float _tickInterval = 0f;
     private float _timeSinceLastTick = 0f;
 
-    public bool TryEnter(float duration, float ticks, float tickDamage)
+    public bool TryEnter(float duration, float ticks, float tickDamage, GameObject source)
     {
         if (_duration > duration && _damage < tickDamage) return false;
 
@@ -46,6 +47,7 @@ public class AblazeStatus : Status
         _tickInterval = _duration / _ticks;
         _damage = tickDamage;
         _timeSinceLastTick = 0f;
+        _source = source;
         _isActive = true;
 
         return true;
@@ -58,7 +60,7 @@ public class AblazeStatus : Status
         if (_timeSinceLastTick > _tickInterval)
         {
             _timeSinceLastTick -= _tickInterval;
-            playerEventMessenger.SendHealthChangeEvent(null, "Ablaze", -_damage, HealthChangeType.DOT);
+            playerEventMessenger.SendHealthChangeEvent(_source, "Ablaze", -_damage, HealthChangeType.DOT);
 
             if (--_ticks == 0) _isActive = false;
         }

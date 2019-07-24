@@ -143,7 +143,7 @@ MonoBehaviour:
   _duration: 2
   _ticks: 10
   _damage: 2
-  _name: 
+  _name: Fireball
 --- !u!114 &1878905716223398309
 MonoBehaviour:
   m_ObjectHideFlags: 0
