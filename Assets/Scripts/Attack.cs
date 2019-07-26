@@ -17,12 +17,12 @@ public abstract class Attack : MonoBehaviour
     private bool _isCasting = false;
     private bool _wasCanceled = false;
 
-    public void ManualUpdate()
+    public void ManualUpdate(PlayerAttacks source)
     {
         if (!_isCasting)
-            UpdateNotCasting();
+            UpdateNotCasting(source);
         else
-            UpdateCasting();
+            UpdateCasting(source);
     }
 
     private void Start()
@@ -33,14 +33,14 @@ public abstract class Attack : MonoBehaviour
 
     public bool AttemptInitiate()
     {
-        if (_charges == 0 || _wasCanceled) return false; //TODO: Cooldown animation? Or should be handled elsewhere?
+        if (_charges == 0 || _wasCanceled) return false;
         _isCasting = true;
         _movement.AddMovementModifier(_movementSlowPercent, _castTime, "Casting"); 
         _castTimer = 0.0f;
         return true;
     }
 
-    private void UpdateCasting()
+    private void UpdateCasting(PlayerAttacks source)
     {
         _castTimer += Time.deltaTime;
 
@@ -69,14 +69,14 @@ public abstract class Attack : MonoBehaviour
         _playerMat.SetColor("_Color", Color.white);
     }
 
-    protected void UpdateNotCasting()
+    protected void UpdateNotCasting(PlayerAttacks source)
     {
         _cooldownTimer -= Time.deltaTime;
 
         if (_charges < _maxCharges && _cooldownTimer < 0.0f)
         {
-            ++_charges;
-            _cooldownTimer += _cooldown;
+             ++_charges;
+             _cooldownTimer += _cooldown;
         }
 
         if (_wasCanceled)
@@ -86,7 +86,15 @@ public abstract class Attack : MonoBehaviour
             {
                 _cancelCooldownTimer = 0f;
                 _wasCanceled = false;
+                source.AnimateCurrentAttackCooldown(1f, 0f);
             }
+            else
+                source.AnimateCurrentAttackCooldown(_cancelCooldownTimer / _cancelCooldown, _cancelCooldown - _cancelCooldownTimer);
+
         }
+        else if (_charges < _maxCharges)
+            source.AnimateCurrentAttackCooldown((_cooldown - _cooldownTimer) / _cooldown, _cooldownTimer);
+        else
+            source.AnimateCurrentAttackCooldown(1f, 0f);
     }
 }

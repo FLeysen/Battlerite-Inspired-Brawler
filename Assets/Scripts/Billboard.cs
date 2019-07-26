@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BillboardOnStart : MonoBehaviour
+public class Billboard : MonoBehaviour
 {
     private void LateUpdate()
     {

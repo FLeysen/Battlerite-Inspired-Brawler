@@ -8,11 +8,22 @@ public class PlayerAttacks : MonoBehaviour
     [Tooltip("Attacks will be bound in order of: simple, ability1, ability2")]
     [SerializeField] private Attack[] _attacks = new Attack[0];
     public int activeAttackID { get; set; } = -1;
+    private UIAbilityCooldownHandler _uiCooldownHandler = null;
+    private int _currentlyUpdating = 0;
+
+    private void Start()
+    {
+        _uiCooldownHandler = GetComponent<UIAbilityCooldownHandler>();
+    }
 
     private void Update()
     {
+        _currentlyUpdating = 0;
         foreach(Attack attack in _attacks)
-            attack.ManualUpdate();
+        {
+            attack.ManualUpdate(this);
+            ++_currentlyUpdating;
+        }
 
         if (activeAttackID != -1)
         {
@@ -47,5 +58,10 @@ public class PlayerAttacks : MonoBehaviour
     private bool CheckAndExecute(int idx)
     {
         return _attacks[idx].AttemptInitiate();
+    }
+
+    public void AnimateCurrentAttackCooldown(float percentage, float time)
+    {
+        _uiCooldownHandler.SetValue(_currentlyUpdating, percentage, time);
     }
 }
